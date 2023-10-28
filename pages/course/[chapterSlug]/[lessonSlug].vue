@@ -14,7 +14,7 @@
     <p>{{ lesson.text }}</p>
 
     <LessonCompleteButton :model-value="isLessonComplete" @update:model-value="
-                                    throw createError('Could not update');" />
+                                        throw createError('Could not update');" />
 
   </div>
   <VideoPlayer v-if="lesson.videoId" :videoId="lesson.videoId" />
@@ -23,31 +23,34 @@
 const course = useCourse();
 const route = useRoute();
 definePageMeta({
-  middleware: function ({ params }, from) {
-    const course = useCourse();
-    const chapter = course.chapters.find(
-      (chapter) => chapter.slug === params.chapterSlug
-    );
-    if (!chapter) {
-      return abortNavigation(
-        createError({
-          statusCode: 404,
-          message: 'Chapter not found',
-        }))
-    }
-    const lesson = chapter.lessons.find(
-      (lesson) => lesson.slug === params.lessonSlug
-    );
-    if (!lesson) {
-      return abortNavigation(
-        createError({
-          statusCode: 404,
-          message: 'Lesson not found'
-        })
+  middleware: [
+    function ({ params }, from) {
+      const course = useCourse();
+      const chapter = course.chapters.find(
+        (chapter) => chapter.slug === params.chapterSlug
       );
-    }
+      const lesson = chapter.lessons.find(
+        (lesson) => lesson.slug === params.lessonSlug
+      );
+      if (!chapter) {
+        return abortNavigation(
+          createError({
+            statusCode: 404,
+            message: 'Chapter not found',
+          }))
+      }
+      if (!lesson) {
+        return abortNavigation(
+          createError({
+            statusCode: 404,
+            message: 'Lesson not found'
+          })
+        );
+      }
+    },
+    'auth',
+  ],
 
-  }
 });
 const chapter = computed(() => {
   return course.chapters.find(
