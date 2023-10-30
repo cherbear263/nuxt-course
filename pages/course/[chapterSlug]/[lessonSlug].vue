@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb-10">
     <p class="mt-0 mb-1 font-bold uppercase text-slate-400">
       Lesson {{ chapter.number }} - {{ lesson.number }}</p>
 
@@ -14,7 +14,7 @@
     <p>{{ lesson.text }}</p>
 
     <LessonCompleteButton :model-value="isLessonComplete" @update:model-value="
-                                        throw createError('Could not update');" />
+                                                        throw createError('Could not update');" />
 
   </div>
   <VideoPlayer v-if="lesson.videoId" :videoId="lesson.videoId" />

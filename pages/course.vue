@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div class="mb-12 prose">
-      <h1 class="text-3xl">
-        <span class="font-medium">
-          Course:
-          <span class="text-3xl font-bold">{{ title }}</span>
+    <div class="flex items-center justify-between max-w-full mb-4 prose">
+      <h1 class="flex-shrink text-sm sm:text-xl">
+        <span class="text-gray-500">
+          <span class="text-2xl font-bold text-gray-700">{{ title }}</span>
         </span>
       </h1>
+      <UserCard />
     </div>
 
-    <div class="flex flex-col justify-center flex-grow w-full gap-4 sm:flex-row">
-      <div class="flex flex-col order-last w-full p-6 prose bg-white rounded-md sm:w-1/4 sm:order-first">
+    <div class="flex-row gap-3 sm:flex">
+      <div class="flex-col order-last w-full p-6 prose bg-white rounded-md sm:w-1/3 sm:order-first">
         <h3>Chapters</h3>
         <!-- All the lessons for the course listed here -->
-        <div class="flex flex-col mb-4 space-y-1" v-for="chapter in chapters" :key="chapter.slug">
+        <div class="flex flex-col mb-4 space-y-1 " v-for="chapter in chapters" :key="chapter.slug">
           <h4>{{ chapter.title }}</h4>
           <NuxtLink v-for="(lesson, index) in chapter.lessons" :key="lesson.slug" :to="lesson.path"
             class="flex flex-row p-2 space-x-1 font-normal prose-sm no-underline hover:text-gray-400" :class="{
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div class="order-first w-full p-8 prose bg-white rounded-md sm:w-3/4 sm:order-last ">
+      <div class="order-first w-full max-w-full p-8 prose bg-white rounded-md sm:w-2/3 sm:order-last ">
         <NuxtErrorBoundary>
           <NuxtPage />
           <template #error="{ error }">
